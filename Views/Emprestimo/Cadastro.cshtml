@@ -1,6 +1,8 @@
 @model CadEmprestimoViewModel
 @{
     ViewData["Title"] = "Cadastro de Emprestimos";
+
+    Model.Livros = LivroService.ListarDisponiveis();
 }
 
 <h1 class="row justify-content-md-center">Cadastro de Empréstimo</h1>

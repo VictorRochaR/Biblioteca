@@ -22,6 +22,7 @@ namespace Biblioteca.Models
                 Livro livro = bc.Livros.Find(l.Id);
                 livro.Autor = l.Autor;
                 livro.Titulo = l.Titulo;
+                livro.Ano = l.Ano;
 
                 bc.SaveChanges();
             }
@@ -62,7 +63,7 @@ namespace Biblioteca.Models
             }
         }
 
-        public ICollection<Livro> ListarDisponiveis()
+        public static ICollection<Livro> ListarDisponiveis()
         {
             using(BibliotecaContext bc = new BibliotecaContext())
             {
