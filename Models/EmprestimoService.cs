@@ -57,11 +57,11 @@ namespace Biblioteca.Models
                 else
                 {
                     // caso filtro não tenha sido informado
-                    query = bc.Emprestimos;
+                    query = bc.Emprestimos.Include(e => e.Livro);
                 }
                 
                 //ordenação padrão
-                return query.OrderBy(l => l.DataDevolucao).ToList();
+                return query.OrderByDescending(l => l.DataDevolucao).ToList();
             }
         }
 

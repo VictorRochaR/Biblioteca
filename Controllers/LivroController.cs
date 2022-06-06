@@ -41,6 +41,7 @@ namespace Biblioteca.Controllers
             }
             LivroService livroService = new LivroService();
             return View(livroService.ListarTodos(objFiltro));
+           
         }
 
         public IActionResult Edicao(int id)
