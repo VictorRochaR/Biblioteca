@@ -24,13 +24,14 @@ namespace Biblioteca.Controllers
 
          [HttpPost]
           public IActionResult editarUsuario(Usuario uEdit){
+              uEdit.senha = Cript.textoCript(uEdit.senha);
               UsuarioService US = new UsuarioService();
               US.editarUsuario(uEdit);
 
               return RedirectToAction("ListaDeUsuarios");
           }
 
-          public IActionResult registrarUsuario(int id){
+          public IActionResult registrarUsuarios(int id){
              Autenticacao.CheckLogin(this);
             Autenticacao.verificaSeEAdm(this);
 
@@ -38,7 +39,7 @@ namespace Biblioteca.Controllers
          }
 
         [HttpPost]
-           public IActionResult registraUsuario(Usuario novoU){
+           public IActionResult registrarUsuarios(Usuario novoU){
                Autenticacao.CheckLogin(this);
             Autenticacao.verificaSeEAdm(this);
 
@@ -49,12 +50,12 @@ namespace Biblioteca.Controllers
                return RedirectToAction("cadastroRealizado");
            }
 
-           public IActionResult excluiUsuario(int id){
+           public IActionResult excluirUsuario(int id){
                return View(new UsuarioService().Listar(id));
            }
 
            [HttpPost]
-           public IActionResult excluiUsuario(string decisao, int id){
+           public IActionResult excluirUsuario(string decisao, int id){
                if(decisao=="EXCLUIR"){
                    ViewData["Mensagem"] = "Exclusão do usuario "+new UsuarioService().Listar(id).nome+" realizada!";
                    new UsuarioService().excluirUsuario(id);

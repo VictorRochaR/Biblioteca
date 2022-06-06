@@ -1,0 +1,41 @@
+@model List<Usuario>
+@{
+    ViewData["Title"] = "Listagem de Livros";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <table class="table table-striped"> 
+            <thead>
+                <tr><th>Nome</th>
+                <th>Login</th>
+                <th>Tipo</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if(Model.Count==0){
+                    <td>Nenhum resultado</td>
+                }
+                @foreach (Usuario u in Model)
+                {
+                    
+                
+                <tr>
+                    <td>@u.nome</td>
+                    <td>@u.login</td>
+                    @if(u.tipo==Usuario.ADMIN){
+                      <td>Administrador</td>  
+                    }else{
+                        <td>Padrão</td> 
+                    }
+
+                    <td><a href="editarUsuario?id=@u.Id">editar</a></td>
+                    <td><a href="excluirUsuario?id=@u.Id">excluir</a></td>
+                </tr>
+                }
+            </tbody>
+        </table>
+
+        <a href="registrarUsuarios">Registrar novo usário</a>
+    </div>
+</div>

@@ -10,7 +10,7 @@ namespace Biblioteca.Controllers
     {
         public static void CheckLogin(Controller controller)
         {   
-            if(string.IsNullOrEmpty(controller.HttpContext.Session.GetString("user")))
+            if(string.IsNullOrEmpty(controller.HttpContext.Session.GetString("login")))
             {
                 controller.Request.HttpContext.Response.Redirect("/Home/Login");
             }
@@ -29,8 +29,8 @@ namespace Biblioteca.Controllers
                     return false;
                 } else{
                     controller.HttpContext.Session.SetString("login",ListaUsuarioEncontrado[0].login);
-                    controller.HttpContext.Session.SetString("nome",ListaUsuarioEncontrado[0].login);
-                    controller.HttpContext.Session.SetString("tipo",ListaUsuarioEncontrado[0].login);
+                    controller.HttpContext.Session.SetString("nome",ListaUsuarioEncontrado[0].nome);
+                    controller.HttpContext.Session.SetInt32("tipo",ListaUsuarioEncontrado[0].tipo);
                     return true;
                 }
             }
@@ -52,7 +52,9 @@ namespace Biblioteca.Controllers
         }
 
         public static void verificaSeEAdm(Controller controller){
-            if(!(controller.HttpContext.Session.GetInt32("tipo")==Usuario.ADMIN)){
+            if((controller.HttpContext.Session.GetInt32("tipo")==Usuario.ADMIN)){
+                
+            }else{
                 controller.Request.HttpContext.Response.Redirect("/Usuarios/precisaAdm");
             }
         }

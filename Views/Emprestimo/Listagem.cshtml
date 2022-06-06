@@ -1,6 +1,9 @@
-@model ICollection<Emprestimo>
+@model List<Emprestimo>
 @{
     ViewData["Title"] = "Listagem de Empréstimos";
+    int PaginaAtual = Int32.Parse(ViewData["PaginaAtual"].ToString());
+    int NumTotalDePag = Model.Count/10 + (Model.Count%10==0 ? 0 : 1);
+    string classe="";
 }
 
 <div class="row">
@@ -16,6 +19,13 @@
             <input type="text" placeholder="Filtro" name="Filtro" class="form-control" />
         </div>
         <button type="submit" class="btn btn-primary mb-2">Pesquisar</button>
+
+        <div id="SeletorPaginas">
+            <span>Página:</span>
+            @for(int i =1; i<=NumTotalDePag;i++){
+                <span><a href="/Emprestimo/Listagem?PaginaAtual=@i">@i, </a></span>
+            }
+        </div>
     </form>
     </div>
 </div>
@@ -37,17 +47,25 @@
                 @if(Model.Count==0){
                     <td>Nenhum resultado</td>
                 }
-                @foreach(Emprestimo e in Model)
+                 @for(int i = (PaginaAtual-1)*10; i<(10*PaginaAtual<Model.Count?10*PaginaAtual:Model.Count); i++)
                 {
-                <tr>
-                    <td>@e.Id</td>
-                    <td>@e.NomeUsuario</td>
-                    <td>@e.DataEmprestimo.ToString("dd/MM/yyyy")</td>
-                    <td>@e.DataDevolucao.ToString("dd/MM/yyyy")</td>
-                    <td>@e.Livro.Titulo</td>
-                    <td>@e.Livro.Autor</td>
-                    <td><a href="/Emprestimo/Edicao/@e.Id">Editar</a></td>
-                </tr>
+
+                    if((System.DateTime.Compare(System.DateTime.Now, Model[i].DataDevolucao)>0)){
+                        classe = "text-danger";
+                    }else{
+                        classe= "";
+                    }
+                   
+                     <tr class="@classe">
+                            <td>@Model[i].Id</td>
+                            <td>@Model[i].NomeUsuario</td>
+                            <td>@Model[i].DataEmprestimo.ToString("dd/MM/yyyy")</td>
+                            <td>@Model[i].DataDevolucao.ToString("dd/MM/yyyy")</td>
+                            <td>@Model[i].Livro.Titulo</td>
+                            <td>@Model[i].Livro.Autor</td>
+                            <td><a href="/Emprestimo/Edicao/@Model[i].Id">Editar</a></td>
+                        </tr>
+                
                 }
             </tbody>
         </table>

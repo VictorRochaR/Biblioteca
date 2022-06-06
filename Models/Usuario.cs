@@ -3,7 +3,7 @@ namespace Biblioteca.Models
     public class Usuario
     {
     public static int ADMIN = 1;
-    public static int PADRAO = 1; 
+    public static int PADRAO = 0; 
 
     public int Id {get; set;}
     public string nome {get; set;}

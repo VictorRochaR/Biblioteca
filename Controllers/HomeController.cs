@@ -21,7 +21,6 @@ namespace Biblioteca.Controllers
 
         public IActionResult Index()
         {
-            Autenticacao.CheckLogin(this);
             return View();
         }
 
