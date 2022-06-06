@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-
+using Biblioteca.Models;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace Biblioteca.Controllers
 {
@@ -35,7 +37,24 @@ namespace Biblioteca.Controllers
         }
 
         public static void verificaSeAdmExiste(BibliotecaContext bc){
+            IQueryable<Usuario> usuEncontrado = bc.usuarios.Where(u => u.login=="admin");
 
+            if(usuEncontrado.ToList().Count()==0){
+                Usuario admin = new Usuario();
+                admin.login = "admin";
+                admin.senha = Cript.textoCript("123");
+                admin.tipo = Usuario.ADMIN;
+                admin.nome = "Administrator";
+
+                bc.usuarios.Add(admin);
+                bc.SaveChanges();
+            }
+        }
+
+        public static void verificaSeEAdm(Controller controller){
+            if(!(controller.HttpContext.Session.GetInt32("tipo")==Usuario.ADMIN)){
+                controller.Request.HttpContext.Response.Redirect("/Usuarios/precisaAdm");
+            }
         }
 
     }

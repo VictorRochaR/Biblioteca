@@ -1,6 +1,6 @@
 using System;
-using System.Security.Criptography;
-using System.text;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace Biblioteca.Models
 {
